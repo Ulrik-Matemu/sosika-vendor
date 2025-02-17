@@ -141,3 +141,22 @@ button.addEventListener('click', function () {
 }
 
 });
+
+
+function navigateAddItem() {
+    window.location.href = 'add-menu.html';
+}
+
+function navigateMenuItems() {
+    window.location.href = 'menu-items.html';
+}
+
+function navigateOrders() {
+    window.location.href = 'orders.html';
+}
+function navigateProfile() {
+    window.location.href = 'profile.html';
+}
+function navigateHome() {
+    window.location.href = 'dashboard.html';
+}

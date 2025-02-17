@@ -336,3 +336,21 @@ h1, h2, h3 {
         width: 90%;
     }
 }
+
+
+.navigation {
+    background-color: rgb(43, 43, 43);
+    position: fixed;
+    bottom: 0;
+    padding: 5px;
+    width: 100%;
+}
+
+.navigation-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    text-align: center;
+    color: white;
+    font-size: 25px;
+}
+
