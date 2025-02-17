@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Vendor Profile - Sosika</title>
+    <link rel="stylesheet" href="src/styles.css">
+</head>
+<body>
+    <div id="backButtonContainer">
+        <button id="backButton" onclick="(window.history.length > 1) ? window.history.back() : window.location.href = '/'">
+          &#8592; Back
+        </button>
+        <style>
+          #backButton {
+      position: fixed;
+      top: 10px;
+      left: 10px;
+      padding: 10px 15px;
+      background-color: #317EFB;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+      z-index: 1000;
+      transition: background 0.3s;
+    }
+    #backButton:hover {
+      background-color: #0056b3;
+    }
+    @media (max-width: 600px) {
+      #backButton {
+        font-size: 10px;
+        padding: 8px 12px;
+      }
+    }
+        </style>
+      </div>
+      
+    <h1 class="title"><span>Sosika</span> Vendor Dashboard</h1>
+    <section class="update-profile">
+        <h1 style="">Update Vendor Profile</h1>
+        <p id="loading-text">Loading vendor details...</p>
+
+        <div class="login-container">
+            <form id="vendor-form">
+                <div class="input">
+                    <label for="name">Business Name</label>
+                    <input type="text" id="name">
+                </div>
+
+                <div class="input">
+                    <label for="ownerName">Owner Name</label>
+                    <input type="text" id="ownerName">
+                </div>
+
+                <div class="input">
+                    <label for="collegeId">Institute</label>
+                    <select id="collegeId">
+                        <option value="1">College 1</option>
+                        <option value="2">College 2</option>
+                    </select>
+                </div>
+
+
+                <div class="input">
+                    <label for="password">New Password</label>
+                    <input type="password" id="password" placeholder="Leave blank to keep current password">
+                </div>
+
+                <div class="submit-button">
+                    <button type="submit">Update Profile</button>
+                </div>
+                
+            </form>
+
+            <p id="message"></p>
+        </div>
+    </section>
+
+    <script src="src/profile.js"></script>
+</body>
+</html>

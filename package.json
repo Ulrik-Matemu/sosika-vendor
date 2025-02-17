@@ -1,0 +1,17 @@
+{
+  "name": "vendor-pwa",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "deploy": "gh-pages -d dist"
+  },
+  "devDependencies": {
+    "vite": "^6.1.0",
+    "vite-plugin-pwa": "^0.21.1",
+    "workbox-build": "^7.3.0"
+  }
+}

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vendor Dashboard - Incoming Orders</title>
+    <link rel="stylesheet" href="src/orders-styles.css">
+</head>
+<body>
+    <div id="backButtonContainer">
+        <button id="backButton" onclick="(window.history.length > 1) ? window.history.back() : window.location.href = '/'">
+          &#8592; Back
+        </button>
+        <style>
+         #backButton {
+      position: fixed;
+      top: 10px;
+      left: 10px;
+      padding: 10px 15px;
+      background-color: #317EFB;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+      z-index: 1000;
+      transition: background 0.3s;
+    }
+    #backButton:hover {
+      background-color: #0056b3;
+    }
+    @media (max-width: 600px) {
+      #backButton {
+        font-size: 10px;
+        padding: 8px 12px;
+      }
+    }
+        </style>
+      </div>
+      
+    <h1 class="title"><span>Sosika</span> Vendor Dashboard</h1>
+    <div class="container">
+     
+        
+        <div class="error-message" id="error-container"></div>
+        
+      
+        
+        <div class="loader">
+            <div class="spinner"></div>
+            <p>Loading orders...</p>
+        </div>
+        
+        <div class="empty-state">
+            <h3>No orders found</h3>
+            <p>There are no orders matching your filters at the moment.</p>
+        </div>
+        
+        <div class="orders-container" id="orders-container">
+            <!-- Orders will be populated here via JavaScript -->
+        </div>
+    </div>
+    
+    <!-- Order Details Modal -->
+    <div id="orderModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Order Details</h2>
+                <span class="close">&times;</span>
+            </div>
+            <div class="modal-body" id="modal-body">
+                <!-- Order details will be populated here -->
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-danger" id="cancel-order-btn">Cancel Order</button>
+                <button class="btn btn-success" id="complete-order-btn">Mark as Completed</button>
+                <button class="btn btn-primary" id="progress-order-btn">Mark as In Progress</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Notification -->
+    <div class="notification" id="notification">
+        Operation successful
+    </div>
+    
+    <script src="src/orders-script.js">
+    </script>
+</body>
+</html>
