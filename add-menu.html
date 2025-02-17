@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Menu Item - Sosika</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Titillium+Web:ital,wght@0,200;0,300;0,400;0,600;0,700;0,900;1,200;1,300;1,400;1,600;1,700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://kit.fontawesome.com/1581a3bb2a.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" crossorigin href="/sosika-vendor/assets/styles-DdZxAmHr.css">
+<link rel="manifest" href="/sosika-vendor/manifest.webmanifest"><script id="vite-plugin-pwa:register-sw" src="/sosika-vendor/registerSW.js"></script></head>
+
+<body>
+   
+      
+        <h1 class="title"><span>Sosika</span> Vendor Dashboard</h1>
+     <div class="main">
+        <div class="form-container" style="display: grid; justify-content: center;">
+            <h1>Add Menu Item</h1>
+            <form id="add-menu-form">
+                <div class="input">
+                    <label for="name">Name of Item</label>
+                    <input type="text" name="name" id="name" required>
+                </div>
+                <div class="input">
+                    <label for="price">Price</label>
+                    <input type="number" name="price" id="price" required>
+                </div>
+                <div class="input">
+                    <label for="category">Category</label>
+                    <select name="category" id="category" required>
+                        <option value="breakfast">Breakfast</option>
+                        <option value="lunch">Lunch</option>
+                        <option value="dinner">Dinner</option>
+                        <option value="snacks">Snacks</option>
+                        <option value="drinks">Drinks</option>
+                    </select>
+                </div>
+                <div class="input">
+                    <label for="description">Description</label>
+                    <textarea name="description" id="description" required></textarea>
+                </div>
+                <div class="image-upload">
+                    <input type="file" name="image" id="image" accept="image/*">
+                </div>
+                <div class="submit-button">
+                    <button type="submit">Add Item</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="navigation">
+        <div class="navigation-container">
+            <div class="add" onclick="navigateAddItem()">
+                <div class="add-icon">
+                    <i class="fa fa-plus"></i>
+                </div>
+                
+            </div>
+            <div class="home" onclick="navigateHome()">
+                <div class="home-icon">
+                    <i class="fa fa-home"></i>
+                </div>
+                
+            </div>
+            <div class="order-nav" onclick="navigateOrders()">
+                <div class="order-icon">
+                    <i class="fa fa-eye"></i>
+                </div>
+               
+            </div>
+        </div>
+    </div>
+    <style>
+        .submit-button {
+            display: grid;
+            justify-content: center;
+        }
+
+        .submit-button button {
+            width: 400px;
+            padding: 10px 20px;
+            font-size: 20px;
+            background-color: #0bf803;
+            border: 1px solid #0bf803;
+            border-radius: 5px;
+        }
+
+        @media (max-width: 768px) {
+            .submit-button button {
+                width: 305px;
+            }
+        }
+
+        .form-container h1 {
+            margin: 0;
+        }
+
+        .image-upload-container {
+          border: 1px solid black;
+          margin: 50px 0;
+          border-radius: 5px;
+          text-align: center;
+          color: gray;
+          background-color: white;
+          padding: 50px;
+          height: 100%;
+        }
+
+        @media (max-width: 768px) {
+        .input input, select, textarea {
+            width: 300px;
+        }
+        .image-upload-container {
+            margin: 50px;
+        }
+    }
+    </style>
+    <script>
+   document.addEventListener('DOMContentLoaded', function() {
+    const form = document.getElementById('add-menu-form');
+
+    form.addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        const itemName = document.getElementById('name').value;
+        const itemDescription = document.getElementById('description').value;
+        const itemPrice = document.getElementById('price').value;
+        const itemCategory = document.getElementById('category').value;
+        const itemImageFile = document.getElementById('image').files[0];
+        const vendorId = localStorage.getItem('vendorId');
+
+        if (!itemImageFile) {
+            alert("Please upload an image.");
+            return;
+        }
+
+        const formData = new FormData();
+        formData.append('name', itemName);
+        formData.append('description', itemDescription);
+        formData.append('price', itemPrice);
+        formData.append('category', itemCategory);
+        formData.append('image', itemImageFile);
+        formData.append('vendorId', vendorId);
+
+        fetch('http://localhost:3000/api/menuItems', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.message === "Menu item added successfully") {
+                alert('Menu item added successfully!');
+                form.reset();
+            } else {
+                alert('Failed to add menu item: ' + data.error);
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('An error occurred while adding the menu item.');
+        });
+    });
+});
+
+
+function navigateAddItem() {
+                window.location.href = 'add-menu.html';
+            }
+
+            function navigateMenuItems() {
+                window.location.href = 'menu-items.html';
+            }
+            
+            function navigateOrders() {
+                window.location.href = 'orders.html';
+            }
+            function navigateProfile() {
+                window.location.href = 'profile.html';
+            }
+            function navigateHome() {
+                window.location.href = 'dashboard.html';
+            }
+</script>
+</body>
+
+</html>

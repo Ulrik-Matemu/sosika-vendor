@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vendor Registration - Sosika</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Titillium+Web:ital,wght@0,200;0,300;0,400;0,600;0,700;0,900;1,200;1,300;1,400;1,600;1,700&display=swap"
+        rel="stylesheet">
+        <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+        <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+        <link rel="manifest" href="/sosika-vendor/manifest.json">
+  <link rel="stylesheet" crossorigin href="/sosika-vendor/assets/styles-DdZxAmHr.css">
+<link rel="manifest" href="/sosika-vendor/manifest.webmanifest"><script id="vite-plugin-pwa:register-sw" src="/sosika-vendor/registerSW.js"></script></head>
+
+<body>
+    <div id="backButtonContainer">
+  <button id="backButton" onclick="(window.history.length > 1) ? window.history.back() : window.location.href = '/'">
+    &#8592; Back
+  </button>
+  <style>
+    #backButton {
+      position: fixed;
+      top: 10px;
+      left: 10px;
+      padding: 10px 15px;
+      background-color: #317EFB;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+      z-index: 1000;
+      transition: background 0.3s;
+    }
+    #backButton:hover {
+      background-color: #0056b3;
+    }
+    @media (max-width: 600px) {
+      #backButton {
+        font-size: 10px;
+        padding: 8px 12px;
+      }
+    }
+  </style>
+</div>
+
+    <section class="welcome">
+        <h1>Sosika</h1>
+        <h2>Welcome To Sosika, Vendor!</h2>
+    </section>
+    <section class="auth">
+        <div class="login-container">
+            <form>
+                <div class="input">
+                    <label for="name">Name</label>
+                    <input type="text" name="name" id="name" required>
+                </div>
+                <div class="input">
+                    <label for="owner-name">Name of Owner</label>
+                    <input type="text" name="owner-name" id="owner-name" required>
+                </div>
+                <div class="input">
+                    <label for="college">Institute</label>
+                    <select name="college" id="college" required>
+                        <option value="1">College 1</option>
+                        <option value="2">College 2</option>
+                    </select>
+                </div>
+                <div class="input">
+                    <label for="geolocation">Location</label>
+                    <div id="map" style="height: 300px;"></div>
+                    <input type="hidden" name="geolocation" id="geolocation" required>
+                </div>
+
+                <div class="input">
+                    <label for="password">Password</label>
+                    <input type="password" name="password" id="password" required>
+                </div>
+                <div class="input">
+                    <label for="confirm-password">Confirm Password</label>
+                    <input type="confirm-password" name="confirm-password" id="confirm-password" required>
+                </div>
+                <div class="form-button">
+                    <button type="submit">REGISTER</button>
+                </div>
+            </form>
+            
+        </div>
+        <p style="text-align: center;">Already a Vendor on Sosika? Login <a href="index.html">here.</a></p>
+    </section>
+    <script src="src/register.js"></script>
+    <script>
+        var map = L.map('map').setView([-3.413696529556248, 36.71094822883549], 16);
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+
+        var marker;
+
+        map.on('click', function(e) {
+            var lat = e.latlng.lat;
+            var lng = e.latlng.lng;
+
+            if (marker) {
+                marker.setLatLng(e.latlng);
+            } else {
+                marker = L.marker(e.latlng).addTo(map);
+            }
+
+            document.getElementById('geolocation').value = lat + ',' + lng;
+        });
+    </script>
+</body>
+
+</html>

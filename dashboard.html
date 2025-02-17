@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Sosika</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Titillium+Web:ital,wght@0,200;0,300;0,400;0,600;0,700;0,900;1,200;1,300;1,400;1,600;1,700&display=swap"
+        rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <script src="https://kit.fontawesome.com/1581a3bb2a.js" crossorigin="anonymous"></script>
+        <link rel="manifest" href="/sosika-vendor/manifest.json">
+  <link rel="stylesheet" crossorigin href="/sosika-vendor/assets/styles-DdZxAmHr.css">
+<link rel="manifest" href="/sosika-vendor/manifest.webmanifest"><script id="vite-plugin-pwa:register-sw" src="/sosika-vendor/registerSW.js"></script></head>
+<body>
+  
+      
+    <h1 class="title"><span>Sosika</span> Vendor Dashboard</h1>
+    <div class="main">
+        <div class="main-content">
+            <h1 id="greeting"></h1>
+            <div class="quick-actions">
+                <h2>Quick Actions</h2>
+                <div style="display: flex; justify-content: center;">
+                    <div class="quick-actions-tabs">
+                        <div class="tab" onclick="navigateOrders()">
+                            <h3><i class="fa fa-eye"></i></h3>
+                            <p>View Orders</p>
+                        </div>
+                        <div class="tab" onclick="navigateAddItem()">
+                            <h3><i class="fa fa-plus"></i></h3>
+                            <p>Add Menu Item</p>
+                        </div>
+                      
+                        <div class="tab" onclick="navigateMenuItems()">
+                            <h3><i class="fa fa-cutlery"></i></h3>
+                            <p>Manage Menu Items</p>
+                        </div>
+                       
+                        <div class="tab" onclick="navigateProfile()">
+                            <h3><i class="fa fa-user"></i></h3>
+                            <p>Profile</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="navigation">
+        <div class="navigation-container">
+            <div class="add" onclick="navigateAddItem()">
+                <div class="add-icon">
+                    <i class="fa fa-plus"></i>
+                </div>
+                
+            </div>
+            <div class="home" onclick="navigateHome()">
+                <div class="home-icon">
+                    <i class="fa fa-home"></i>
+                </div>
+                
+            </div>
+            <div class="order-nav" onclick="navigateOrders()">
+                <div class="order-icon">
+                    <i class="fa fa-eye"></i>
+                </div>
+               
+            </div>
+        </div>
+    </div>
+    <script>
+        const nameOfVendor = localStorage.getItem('vendorName');
+
+        const greetingElement = document.getElementById('greeting');
+            const currentHour = new Date().getHours();
+            let greeting;
+
+            if (currentHour < 12) {
+                greeting = 'Good Morning';
+            } else if (currentHour < 18) {
+                greeting = 'Good Afternoon';
+            } else {
+                greeting = 'Good Evening';
+            }
+
+            greetingElement.textContent = `${greeting}, ${nameOfVendor}`;
+
+
+            function navigateAddItem() {
+                window.location.href = 'add-menu.html';
+            }
+
+            function navigateMenuItems() {
+                window.location.href = 'menu-items.html';
+            }
+            
+            function navigateOrders() {
+                window.location.href = 'orders.html';
+            }
+            function navigateProfile() {
+                window.location.href = 'profile.html';
+            }
+            function navigateHome() {
+                window.location.href = 'dashboard.html';
+            }
+    </script>
+</body>
+</html>
