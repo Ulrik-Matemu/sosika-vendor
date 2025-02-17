@@ -6,7 +6,19 @@ export default defineConfig({
   plugins: [
     VitePWA({
       registerType: 'autoUpdate',
-      
+      build: {
+        rollupOptions: {
+          input: {
+            main: 'index.html',
+            register: 'sign-up.html',
+            dashboard: 'dashboard.html',
+            menuItems: 'menu-items.html',
+            addMenu: 'add-menu.html',
+            orders: 'orders.html',
+            profile: 'profile.html',
+          }
+        }
+      },
       workbox: {
         runtimeCaching: [
           {
