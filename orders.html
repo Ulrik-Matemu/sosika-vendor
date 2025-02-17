@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vendor Dashboard - Incoming Orders</title>
+  <script type="module" crossorigin src="/sosika-vendor/assets/orders-DnHW00f6.js"></script>
+  <link rel="modulepreload" crossorigin href="/sosika-vendor/assets/modulepreload-polyfill-B5Qt9EMX.js">
   <link rel="stylesheet" crossorigin href="/sosika-vendor/assets/orders-B3ChXcKL.css">
 <link rel="manifest" href="/sosika-vendor/manifest.webmanifest"><script id="vite-plugin-pwa:register-sw" src="/sosika-vendor/registerSW.js"></script></head>
 <body>
@@ -107,7 +109,24 @@
     </div>
    
     
-    <script src="src/orders-script.js">
+    <script>
+         function navigateAddItem() {
+        window.location.href = 'add-menu.html';
+    }
+
+    function navigateMenuItems() {
+        window.location.href = 'menu-items.html';
+    }
+    
+    function navigateOrders() {
+        window.location.href = 'orders.html';
+    }
+    function navigateProfile() {
+        window.location.href = 'profile.html';
+    }
+    function navigateHome() {
+        window.location.href = 'dashboard.html';
+    }
     </script>
 </body>
 </html>

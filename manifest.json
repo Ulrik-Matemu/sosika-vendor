@@ -1,7 +1,7 @@
 {
     "name": "Sosika Vendor",
     "short_name": "SosikaV",
-    "start_url": "/",
+    "start_url": "/sosika-vendor/",
     "display": "standalone",
     "background_color": "#e7e7e7",
     "theme_color": "#00bfff",
