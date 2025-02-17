@@ -1,0 +1,1 @@
+if('serviceWorker' in navigator) {window.addEventListener('load', () => {navigator.serviceWorker.register('/sosika-vendor/sw.js', { scope: '/sosika-vendor/' })})}
