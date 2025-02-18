@@ -4,7 +4,7 @@
     "start_url": "/sosika-vendor/",
     "display": "standalone",
     "background_color": "#e7e7e7",
-    "theme_color": "#00bfff",
+    "theme_color": "#2b2b2b",
     "icons": [
       {
         "src": "icons/icon-192x192.png",

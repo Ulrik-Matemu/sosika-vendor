@@ -67,7 +67,11 @@ body {
 
 .input {
     display: grid;
-    margin: 20px 0;
+    margin: 10px 0;
+}
+
+.input label, .image-upload label {
+    font-weight: 600;
 }
 
 .input input, .input select {
