@@ -150,7 +150,7 @@
         formData.append('image', itemImageFile);
         formData.append('vendorId', vendorId);
 
-        fetch('http://localhost:3000/api/menuItems', {
+        fetch('https://sosika-backend.onrender.com/api/menuItems', {
             method: 'POST',
             body: formData
         })

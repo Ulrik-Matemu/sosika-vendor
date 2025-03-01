@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vendor Dashboard - Incoming Orders</title>
-  <script type="module" crossorigin src="/sosika-vendor/assets/orders-DnHW00f6.js"></script>
+  <script type="module" crossorigin src="/sosika-vendor/assets/orders-DSmJ6StO.js"></script>
   <link rel="modulepreload" crossorigin href="/sosika-vendor/assets/modulepreload-polyfill-B5Qt9EMX.js">
-  <link rel="stylesheet" crossorigin href="/sosika-vendor/assets/orders-B3ChXcKL.css">
+  <link rel="stylesheet" crossorigin href="/sosika-vendor/assets/orders-Deh6Bgvc.css">
 <link rel="manifest" href="/sosika-vendor/manifest.webmanifest"><script id="vite-plugin-pwa:register-sw" src="/sosika-vendor/registerSW.js"></script></head>
 <body>
     <div id="backButtonContainer">
@@ -43,6 +43,13 @@
     <h1 class="title"><span>Sosika</span> Vendor Dashboard</h1>
     <div class="container">
      
+        <div class="filter-buttons">
+            <button class="filter-btn" data-status="all">All</button>
+            <button class="filter-btn" data-status="pending">Pending</button>
+            <button class="filter-btn" data-status="in_progress">In Progress</button>
+            <button class="filter-btn" data-status="assigned">Assigned</button>
+            <button class="filter-btn" data-status="completed">Completed</button>
+        </div>
         
         <div class="error-message" id="error-container"></div>
         
@@ -76,7 +83,7 @@
             <div class="modal-footer">
                 <button class="btn btn-danger" id="cancel-order-btn">Cancel Order</button>
                 <button class="btn btn-success" id="complete-order-btn">Mark as Completed</button>
-                <button class="btn btn-primary" id="progress-order-btn">Mark as In Progress</button>
+                <div style="display: none;"><button class="btn btn-primary" id="progress-order-btn">Mark as In Progress</button></div>
             </div>
         </div>
     </div>
@@ -108,7 +115,7 @@
         Operation successful
     </div>
    
-    
+    <script src="https://sosika-backend.onrender.com/socket.io/socket.io.js"></script>
     <script>
          function navigateAddItem() {
         window.location.href = 'add-menu.html';
@@ -127,6 +134,17 @@
     function navigateHome() {
         window.location.href = 'dashboard.html';
     }
+    </script>
+    <script>
+        const socket = io('https://sosika-backend.onrender.com');
+        const vendorId = localStorage.getItem('vendorId');
+socket.emit('joinVendor', vendorId);
+
+socket.on('orderUpdated', (data) => {
+    console.log("Order updated:", data);
+    alert(`Order ${data.orderId} is now ${data.status}`);
+});
+
     </script>
 </body>
 </html>
