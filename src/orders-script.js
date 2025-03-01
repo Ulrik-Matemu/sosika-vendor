@@ -5,7 +5,7 @@
     }
     
     // API base URL - update this to match your backend URL
-    const API_BASE_URL = 'http://localhost:3000/api';  // e.g., 'https://your-api.com/api' or leave empty for same-domain
+    const API_BASE_URL = 'https://sosika-backend.onrender.com/api';  // e.g., 'https://your-api.com/api' or leave empty for same-domain
     
     document.addEventListener('DOMContentLoaded', function() {
         // Set vendor name by fetching from backend
@@ -20,7 +20,8 @@
             button.addEventListener('click', function() {
                 filterButtons.forEach(btn => btn.classList.remove('active'));
                 this.classList.add('active');
-                fetchOrders(this.dataset.status !== 'all' ? this.dataset.status : null);
+                currentFilterStatus = this.dataset.status !== 'all' ? this.dataset.status : null;
+                fetchOrders(currentFilterStatus);
             });
         });
         
@@ -51,6 +52,7 @@
     });
     
     let currentOrderId = null;
+    let currentFilterStatus = null; // Track active filter
     
     function fetchVendorInfo() {
         // Replace with actual endpoint to get vendor info
@@ -71,37 +73,57 @@
     }
     
     function fetchOrders(status = null) {
-showLoader();
-hideError();
-
-let endpoint = `${API_BASE_URL}/orders/vendor/${VENDOR_ID}`;
-if (status) {
-    endpoint += `&status=${status}`;
-}
-
-fetch(endpoint)
-    .then(response => {
-        if (!response.ok) {
-            throw new Error(`Failed to fetch orders: ${response.status}`);
+        showLoader();
+        hideError();
+    
+        let endpoint = `${API_BASE_URL}/orders/vendor/${VENDOR_ID}`;
+        // Fix URL parameter construction
+        if (status) {
+            endpoint += `?status=${status}`;
         }
-        return response.json();
-    })
-    .then(data => {
-        displayOrders(data);
-    })
-    .catch(error => {
-        console.error('Error fetching orders:', error);
-        hideLoader();
-        showError(`Failed to load orders: ${error.message}`);
-        showEmptyState('Could not load orders. Please try again.');
-    });
-}
+    
+        fetch(endpoint)
+            .then(response => {
+                if (!response.ok) throw new Error(`Failed to fetch orders: ${response.status}`);
+                return response.json();
+            })
+            .then(data => {
+                // Sort orders by datetime descending
+                const sortedOrders = data.sort((a, b) => 
+                    new Date(b.order_datetime) - new Date(a.order_datetime)
+                );
+                displayOrders(sortedOrders);
+            })
+            .catch(error => {
+                console.error('Error fetching orders:', error);
+                hideLoader();
+                showError(`Failed to load orders: ${error.message}`);
+                showEmptyState('Could not load orders. Please try again.');
+            });
+    }
+    
+    // Update interval to use current filter
+    setInterval(() => {
+        fetchOrders(currentFilterStatus);
+    }, 20000);
+    
+    const menuItemsCache = {};
 
-// Automatically refresh orders every 10 seconds
-setInterval(() => {
-fetchOrders();
-}, 20000); // 20 seconds
-
+    async function getItemName(menu_item_id) {
+        if (menuItemsCache[menu_item_id]) {
+            return menuItemsCache[menu_item_id]; // Use cached name
+        }
+        
+        try {
+            const response = await fetch(`${API_BASE_URL}/menuItems/item/${menu_item_id}`);
+            const data = await response.json();
+            menuItemsCache[menu_item_id] = data.name;
+            return data.name;
+        } catch (error) {
+            console.error("Error fetching item name:", error);
+            return `Item #${menu_item_id}`;
+        }
+    }
     
     function displayOrders(orders) {
         hideLoader();
@@ -190,7 +212,14 @@ fetchOrders();
             });
     }
     
-    function populateOrderModal(order) {
+    async function populateOrderModal(order) {
+        // Fetch item names asynchronously
+        const itemsWithNames = await Promise.all(order.items.map(async (item) => {
+            const name = item.name || await getItemName(item.menu_item_id);
+            return { ...item, name }; // Return new object with updated name
+        }));
+    
+        // Update modal content
         document.getElementById('modal-body').innerHTML = `
             <h3>Order #${order.id}</h3>
             <div class="order-info">
@@ -200,9 +229,9 @@ fetchOrders();
             </div>
             <h4>Items:</h4>
             <div class="order-items">
-                ${order.items.map(item => `
+                ${itemsWithNames.map(item => `
                     <div class="item">
-                        <span>${item.quantity}x ${item.name || `Item #${item.menu_item_id}`}</span>
+                        <span>${item.quantity}x ${item.name}</span>
                         <span>$${item.total_amount}</span>
                     </div>
                 `).join('')}
@@ -212,29 +241,28 @@ fetchOrders();
                 </div>
             </div>
         `;
-        
+    
         // Show/hide action buttons based on current status
         const progressBtn = document.getElementById('progress-order-btn');
         const completeBtn = document.getElementById('complete-order-btn');
         const cancelBtn = document.getElementById('cancel-order-btn');
-        
-        // Reset
+    
+        // Reset visibility
         progressBtn.style.display = 'block';
         completeBtn.style.display = 'block';
         cancelBtn.style.display = 'block';
-        
-        // Adjust based on current status
+    
+        // Adjust based on order status
         if (order.order_status === 'in_progress' || order.order_status === 'completed') {
             progressBtn.style.display = 'none';
         }
-        
         if (order.order_status === 'completed' || order.order_status === 'cancelled') {
             progressBtn.style.display = 'none';
             completeBtn.style.display = 'none';
             cancelBtn.style.display = 'none';
         }
     }
-    
+     
     function closeModal() {
         document.getElementById('orderModal').style.display = 'none';
         currentOrderId = null;
@@ -341,3 +369,5 @@ fetchOrders();
 
 
    
+
+    

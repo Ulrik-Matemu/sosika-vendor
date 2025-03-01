@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     const parsedVendorId = parseInt(vendorId, 10);
 
-    fetch(`http://localhost:3000/api/menuItems/${parsedVendorId}`)
+    fetch(`https://sosika-backend.onrender.com/api/menuItems/${parsedVendorId}`)
         .then(response => response.json())
         .then(data => {
             if (data.success) {
@@ -56,7 +56,7 @@ button.addEventListener('click', function () {
     const currentStatus = this.getAttribute('data-available') === 'true';
     const newStatus = !currentStatus;
 
-    fetch(`http://localhost:3000/api/menuItems/${itemId}/status`, {
+    fetch(`https://sosika-backend.onrender.com/api/menuItems/${itemId}/status`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ status: newStatus })
@@ -91,7 +91,7 @@ button.addEventListener('click', function () {
         return;
     }
 
-    fetch(`http://localhost:3000/api/menuItems/${itemId}/price`, {
+    fetch(`https://sosika-backend.onrender.com/api/menuItems/${itemId}/price`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ price: newPrice })
@@ -120,7 +120,7 @@ button.addEventListener('click', function () {
 
     if (!confirm('Are you sure you want to delete this menu item?')) return;
 
-    fetch(`http://localhost:3000/api/menuItems/item/${itemId}`, {
+    fetch(`https://sosika-backend.onrender.com/api/menuItems/item/${itemId}`, {
         method: 'DELETE'
     })
     .then(response => response.json())

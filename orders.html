@@ -41,6 +41,13 @@
     <h1 class="title"><span>Sosika</span> Vendor Dashboard</h1>
     <div class="container">
      
+        <div class="filter-buttons">
+            <button class="filter-btn" data-status="all">All</button>
+            <button class="filter-btn" data-status="pending">Pending</button>
+            <button class="filter-btn" data-status="in_progress">In Progress</button>
+            <button class="filter-btn" data-status="assigned">Assigned</button>
+            <button class="filter-btn" data-status="completed">Completed</button>
+        </div>
         
         <div class="error-message" id="error-container"></div>
         
@@ -74,7 +81,7 @@
             <div class="modal-footer">
                 <button class="btn btn-danger" id="cancel-order-btn">Cancel Order</button>
                 <button class="btn btn-success" id="complete-order-btn">Mark as Completed</button>
-                <button class="btn btn-primary" id="progress-order-btn">Mark as In Progress</button>
+                <div style="display: none;"><button class="btn btn-primary" id="progress-order-btn">Mark as In Progress</button></div>
             </div>
         </div>
     </div>
@@ -106,7 +113,7 @@
         Operation successful
     </div>
    
-    
+    <script src="https://sosika-backend.onrender.com/socket.io/socket.io.js"></script>
     <script src="src/orders-script.js" type="module">
     </script>
     <script>
@@ -127,6 +134,17 @@
     function navigateHome() {
         window.location.href = 'dashboard.html';
     }
+    </script>
+    <script>
+        const socket = io('https://sosika-backend.onrender.com');
+        const vendorId = localStorage.getItem('vendorId');
+socket.emit('joinVendor', vendorId);
+
+socket.on('orderUpdated', (data) => {
+    console.log("Order updated:", data);
+    alert(`Order ${data.orderId} is now ${data.status}`);
+});
+
     </script>
 </body>
 </html>

@@ -15,6 +15,7 @@ body {
 @media (max-width: 425px) {
     .menu-items-container {
         grid-template-columns: 1fr;
+        justify-content: center;
     }
 }
 

@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', function() {
             password: document.getElementById('password').value
         };
 
-        fetch('http://localhost:3000/api/vendor/register', {
+        fetch('https://sosika-backend.onrender.com/api/vendor/register', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

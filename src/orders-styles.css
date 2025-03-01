@@ -49,7 +49,7 @@ h1, h2, h3 {
     color: var(--dark-color);
 }
 
-.order-filters {
+.filter-buttons {
     display: flex;
     gap: 15px;
     margin-bottom: 20px;

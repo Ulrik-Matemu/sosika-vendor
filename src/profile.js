@@ -1,5 +1,5 @@
 const vendorId = localStorage.getItem('vendorId'); // Replace with actual vendor ID
-const API_URL = `http://localhost:3000/api/vendor/${vendorId}`; // Replace with your actual backend URL
+const API_URL = `https://sosika-backend.onrender.com/api/vendor/${vendorId}`; // Replace with your actual backend URL
 
 async function fetchVendorDetails() {
     try {
