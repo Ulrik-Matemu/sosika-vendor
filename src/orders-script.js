@@ -158,7 +158,6 @@
             </div>
             <div class="order-info">
                 <p>Ordered: <span>${timeAgo}</span></p>
-                <p>Items: <span>${itemCount}</span></p>
                 <p>Total: <span>$${order.total_amount}</span></p>
             </div>
             <div class="order-actions">
