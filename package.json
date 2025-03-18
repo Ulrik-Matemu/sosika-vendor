@@ -13,5 +13,8 @@
     "vite": "^6.1.0",
     "vite-plugin-pwa": "^0.21.1",
     "workbox-build": "^7.3.0"
+  },
+  "dependencies": {
+    "web-push": "^3.6.7"
   }
 }
