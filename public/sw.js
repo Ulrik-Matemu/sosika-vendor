@@ -9,6 +9,7 @@ self.addEventListener("activate", (event) => {
 });
 
 self.addEventListener('push', event => {
+  console.log("Notification received")
   if (!event.data) return;
   
   try {

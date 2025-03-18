@@ -106,6 +106,20 @@ function urlBase64ToUint8Array(base64String) {
       console.error('Failed to initialize push notifications:', error);
     }
   }
+
+
+  // Add this to your subscription.js file
+function checkPushSupport() {
+    const supportDetails = {
+      serviceWorker: 'serviceWorker' in navigator,
+      pushManager: 'PushManager' in window,
+      permissions: 'permissions' in navigator
+    };
+    console.log('Push support details:', supportDetails);
+    return supportDetails.serviceWorker && supportDetails.pushManager;
+  }
+
+  
   
   // Call this function when the page loads
   document.addEventListener('DOMContentLoaded', initializePushNotifications);
