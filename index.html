@@ -43,7 +43,8 @@
     <script src="src/login.js" type="module"></script>
     <script>
       if ("serviceWorker" in navigator) {
-  navigator.serviceWorker.register("/sosika-vendor/sw.js").then(() => {
+  navigator.serviceWorker.register("/sosika-vendor/sw.js").then(reg => {
+    reg.update();
     console.log("Service Worker Registered");
   });
 }

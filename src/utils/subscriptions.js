@@ -29,6 +29,7 @@ function urlBase64ToUint8Array(base64String) {
       
       if (subscription) {
         console.log('Already subscribed to push notifications');
+        console.log('Push Subscription:', JSON.stringify(subscription));
         return subscription;
       }
       
