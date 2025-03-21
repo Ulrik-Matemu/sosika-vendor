@@ -28,6 +28,7 @@ function urlBase64ToUint8Array(base64String) {
       
       // Check if already subscribed
       let subscription = await registration.pushManager.getSubscription();
+
       
       if (subscription) {
         console.log('Already subscribed to push notifications');
@@ -93,6 +94,7 @@ function urlBase64ToUint8Array(base64String) {
   async function initializePushNotifications() {
     try {
       await registerServiceWorker();
+      await checkAndRenewSubscription();
       const subscribeButton = document.getElementById('push-subscribe-button');
       
       if (subscribeButton) {
@@ -145,6 +147,38 @@ function checkPushSupport() {
         console.error('Service Worker not ready:', err);
       });
   }
+
+  // Add to your subscriptions.js
+async function checkAndRenewSubscription() {
+  if (!('serviceWorker' in navigator) || !('PushManager' in window)) return;
+  
+  try {
+    const registration = await navigator.serviceWorker.ready;
+    let subscription = await registration.pushManager.getSubscription();
+    
+    if (subscription) {
+      // Check if it's been more than 7 days since last renewal
+      const lastRenewal = localStorage.getItem('lastPushRenewal');
+      const now = Date.now();
+      
+      if (!lastRenewal || (now - parseInt(lastRenewal)) > (7 * 24 * 60 * 60 * 1000)) {
+        // Unsubscribe and resubscribe
+        await subscription.unsubscribe();
+        subscription = null;
+        console.log('Renewing push subscription');
+        await subscribeToPushNotifications();
+        localStorage.setItem('lastPushRenewal', now.toString());
+        console.log('subscription renewed');
+      }
+    } else {
+      // No subscription exists, create one
+      await subscribeToPushNotifications();
+      localStorage.setItem('lastPushRenewal', Date.now().toString());
+    }
+  } catch (error) {
+    console.error('Error checking/renewing subscription:', error);
+  }
+}
 
   
 

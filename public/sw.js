@@ -9,16 +9,21 @@ self.addEventListener("activate", (event) => {
 });
 
 self.addEventListener('push', event => {
-  console.log("Notification received")
-  if (!event.data) return;
+  console.log("Push event received at:", new Date().toISOString());
+  
+  if (!event.data) {
+    console.warn("Push event has no data");
+    return;
+  }
   
   try {
     const data = event.data.json();
+    console.log("Push data received:", JSON.stringify(data));
     
     const options = {
       body: data.body,
-      icon: '/icons/icon-192x192.png', // Update this path to your icon
-      badge: '/icons/icon-144x144.png', // Update this path to your badge
+      icon: '/sosika-vendor/icons/icon-192x192.png', // Fix the path for GitHub Pages
+      badge: '/sosika-vendor/icons/icon-144x144.png', // Fix the path for GitHub Pages
       data: {
         url: data.url || '/'
       },
@@ -34,11 +39,15 @@ self.addEventListener('push', event => {
       ]
     };
 
+    console.log("About to show notification with options:", JSON.stringify(options));
+    
     event.waitUntil(
       self.registration.showNotification(data.title, options)
+        .then(() => console.log("Notification successfully shown"))
+        .catch(err => console.error("Error showing notification:", err))
     );
   } catch (error) {
-    console.error('Error showing notification:', error);
+    console.error('Error processing push event:', error);
   }
 });
 
