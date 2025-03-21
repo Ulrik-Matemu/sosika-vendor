@@ -1,3 +1,9 @@
+// At the top of sw.js
+self.addEventListener('install', (event) => {
+  console.log("Service Worker installing from origin:", self.location.origin);
+  self.skipWaiting();
+});
+
 self.addEventListener("install", (event) => {
   console.log("Service Worker installing.");
   self.skipWaiting(); // Forces new SW to take control immediately
