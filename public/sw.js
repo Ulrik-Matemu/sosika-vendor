@@ -54,3 +54,12 @@ self.addEventListener('notificationclick', event => {
     clients.openWindow(event.notification.data.url)
   );
 });
+
+self.addEventListener('message', event => {
+  console.log('Message received in service worker:', event.data);
+  // Optionally send back a response
+  event.source.postMessage({
+    type: 'RESPONSE',
+    payload: 'Message received by service worker'
+  });
+});

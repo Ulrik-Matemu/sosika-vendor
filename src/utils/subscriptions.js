@@ -1,3 +1,5 @@
+
+
 // Function to convert base64 to Uint8Array for the applicationServerKey
 function urlBase64ToUint8Array(base64String) {
     const padding = '='.repeat((4 - base64String.length % 4) % 4);
@@ -30,6 +32,7 @@ function urlBase64ToUint8Array(base64String) {
       if (subscription) {
         console.log('Already subscribed to push notifications');
         console.log('Push Subscription:', JSON.stringify(subscription));
+        testServiceWorker();
         return subscription;
       }
       
@@ -66,7 +69,7 @@ function urlBase64ToUint8Array(base64String) {
   // Helper function to get vendor ID from storage
   function getUserVendorId() {
     // Get vendor ID from localStorage or cookies
-    return localStorage.getItem('vendorId') || ''; 
+    return localStorage.getItem('vendorId'); 
     // You should implement proper authentication and user identification
   }
   
@@ -119,6 +122,31 @@ function checkPushSupport() {
     console.log('Push support details:', supportDetails);
     return supportDetails.serviceWorker && supportDetails.pushManager;
   }
+
+  checkPushSupport();
+
+  function testServiceWorker() {
+    if (!('serviceWorker' in navigator)) {
+      console.error('Service Worker not supported');
+      return;
+    }
+  
+    navigator.serviceWorker.ready
+      .then(registration => {
+        console.log('Service Worker is ready');
+        
+        // Send a test message to the service worker
+        registration.active.postMessage({
+          type: 'TEST_MESSAGE',
+          payload: 'Testing service worker communication'
+        });
+      })
+      .catch(err => {
+        console.error('Service Worker not ready:', err);
+      });
+  }
+
+  
 
   
   
